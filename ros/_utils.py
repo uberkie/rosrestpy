@@ -3,7 +3,7 @@ from typing import Any, Dict, Union
 
 
 def clean_key(d: Dict[str, Any]) -> dict:
-    nd = dict()
+    nd = {}
     for k, v in d.items():
         k = k.replace("-", "_")
         k = k.replace(".", "")
@@ -16,7 +16,7 @@ def clean_data(d: Dict[str, Any]) -> dict:
     if isinstance(d, dict):
         data = clean_key(d)
     elif isinstance(d, list):
-        data = list()
+        data = []
         for val in d:
             if isinstance(val, dict):
                 data.append(clean_key(val))
@@ -41,9 +41,7 @@ def clean_before_put(d: Dict[str, Any]) -> dict:
 
 
 def _union_str_int(v: str, t: Any) -> Union[str, int]:
-    if v.isdigit():
-        return int(v)
-    return v
+    return int(v) if v.isdigit() else v
 
 
 def make_converter() -> Converter:

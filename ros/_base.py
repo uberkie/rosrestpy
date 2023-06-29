@@ -42,7 +42,7 @@ class BaseProp(Generic[PR]):
         return o
 
     def set(self, **kwds: Any) -> PR:
-        return self.ros.post_as(self.filename + "/set", None, kwds)
+        return self.ros.post_as(f"{self.filename}/set", None, kwds)
 
 
 @define
@@ -75,7 +75,7 @@ class BaseProps(Generic[PR]):
     def _disabled(self, o: PR, s: bool) -> PR:
         assert self._write, "Not writeable"
         return self.ros.patch_as(
-            self.filename + f"/{self._getid(o)}", self.cl, {"disabled": s}
+            f"{self.filename}/{self._getid(o)}", self.cl, {"disabled": s}
         )
 
     def disable(self, o: PR) -> PR:
@@ -89,11 +89,11 @@ class BaseProps(Generic[PR]):
 
     def remove(self, o: PR):
         assert self._write, "Not writeable"
-        self.ros.session.delete(self.filename + f"/{self._getid(o)}")
+        self.ros.session.delete(f"{self.filename}/{self._getid(o)}")
 
     def set(self, o: PR, nw: Dict[str, Any]):
         assert self._write, "Not writeable"
-        return self.ros.patch_as(self.filename + f"/{self._getid(o)}", self.cl, nw)
+        return self.ros.patch_as(f"{self.filename}/{self._getid(o)}", self.cl, nw)
 
     def unset(self):
         # assert self._write, "Not writeable"

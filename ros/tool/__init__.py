@@ -17,7 +17,7 @@ class ToolModule(BaseModule):
 
     @property
     def bandwith_server(self) -> BandwithServer:
-        return self.ros.get_as(self.url + "/bandwidth-server", BandwithServer)
+        return self.ros.get_as(f"{self.url}/bandwidth-server", BandwithServer)
 
     def ping(
         self,
@@ -66,7 +66,7 @@ class ToolModule(BaseModule):
             "direction": direction,
             "random-data": random_data,
         }
-        return self.ros.post_as(self.url + "/bandwidth-test", List[BandwithTest], data)
+        return self.ros.post_as(f"{self.url}/bandwidth-test", List[BandwithTest], data)
 
     def ip_scan(
         self,
@@ -80,7 +80,7 @@ class ToolModule(BaseModule):
             data["address-range"] = address_range
         if freeze_frame_interval:
             data["freeze-frame-interval"] = freeze_frame_interval
-        return self.ros.post_as(self.url + "/ip-scan", List[IPScan], data)
+        return self.ros.post_as(f"{self.url}/ip-scan", List[IPScan], data)
 
     @property
     def netwatch(self):
@@ -127,7 +127,7 @@ class ToolModule(BaseModule):
             data["cpu"] = cpu
         if freeze_frame_interval:
             data["freeze-frame-interval"] = freeze_frame_interval
-        return self.ros.post_as(self.url + "/torch", List[Torch], data)
+        return self.ros.post_as(f"{self.url}/torch", List[Torch], data)
 
     def traceroute(
         self,
@@ -164,7 +164,7 @@ class ToolModule(BaseModule):
             data["interface"] = interface
         if src_address:
             data["src-address"] = src_address
-        return self.ros.post_as(self.url + "/traceroute", List[Traceroute], data)
+        return self.ros.post_as(f"{self.url}/traceroute", List[Traceroute], data)
 
     def torch(
         self,
@@ -198,11 +198,11 @@ class ToolModule(BaseModule):
         }
         if freeze_frame_interval:
             data["freeze-frame-interval"] = freeze_frame_interval
-        return self.ros.post_as(self.url + "/torch", List[Torch], data)
+        return self.ros.post_as(f"{self.url}/torch", List[Torch], data)
 
     def wol(self, interface: str, mac: str) -> List[dict]:
         data = {"interface": interface, "mac": mac}
-        return self.ros.post_as(self.url + "/wol", List[dict], data)
+        return self.ros.post_as(f"{self.url}/wol", List[dict], data)
 
 
 __all__ = [
